@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello WebSocket</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/app.js"></script>
+</head>
+<body>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div id="main-content" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="connect">WebSocket connection:</label>
+                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="name">playerId?</label>
+                    <input type="text" id="name" class="form-control" placeholder="Your playerId here...">
+                </div>
+                <button id="send" class="btn btn-default" type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Notifications</th>
+                </tr>
+                </thead>
+                <tbody id="games">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <button id="getAllGames" class="btn btn-default" type="submit">AllGameIds</button>
+                    <button id="getActiveGames" class="btn btn-default" type="submit">ActiveGames</button>
+                    <button id="getToBeStartedGames" class="btn btn-default" type="submit">JoinTheseGames</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="gameInfoId">GetGameInfo?</label>
+                    <input type="text" id="gameInfoId" class="form-control" placeholder="Enter Game Id..">
+                </div>
+                <button id="gameInfo" class="btn btn-default" type="submit">GameInfo</button>
+            </form>
+        </div>
+    </div>
+
+    <body>
+    <h3>Create Game</h3>
+    <div class="container">
+        <form id="createForm">
+            <!--<label for="playerId">Player Id</label>-->
+            <!--<input type="text" id="playerId" name="playerId" placeholder="Your mobileNumber">-->
+            <label for="maxPlayers">MaxPlayers</label>
+            <input type="text" id="maxPlayers" name="maxPlayers" placeholder="Enter max Number of players">
+            <!--<label for="subject">Subject</label>-->
+            <!--<textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>-->
+            <input id="create" type="submit" value="Submit">
+        </form>
+    </div>
+    </body>
+    <body>
+    <h3>Join Game</h3>
+    <div class="container">
+        <form id="joinForm">
+            <label for="playerId">Player Id</label>
+            <input type="text" id="playerId" name="playerId" placeholder="Your playerId">
+            <label for="gameId">Join Game</label>
+            <input type="text" id="gameId" name="gameId" placeholder="Enter game id to join">
+            <!--<label for="subject">Subject</label>-->
+            <!--<textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>-->
+            <input id="join" type="submit" value="Submit">
+        </form>
+    </div>
+    </body>
+</div>
+</body>
+</html>
