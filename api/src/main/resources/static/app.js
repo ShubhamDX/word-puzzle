@@ -31,6 +31,18 @@ function joinGame(val) {
     stompClient.send("/app/join", {}, JSON.stringify(val));
 }
 
+function startGame(val) {
+    stompClient.send("/app/start", {}, JSON.stringify(val));
+}
+
+function playGame(val) {
+    stompClient.send("/app/play", {}, JSON.stringify(val));
+}
+
+function pass(val) {
+    stompClient.send("/app/play", {}, JSON.stringify(val));
+}
+
 function getAllGames() {
     stompClient.send("/app/getAllGames");
 }
@@ -73,7 +85,7 @@ $(function () {
     $( "#send" ).click(function() { sendName(); });
     $("#create").click(function() {
                 createGame({
-                    'playerId': $("#name").val(),
+                    'playerId': $("#playerIdddd").val(),
                     'maxPlayers': $("#maxPlayers").val()
                 });
             });
@@ -90,4 +102,28 @@ $(function () {
                         'gameId': $("#gameId").val()
                     });
                 });
+    $("#play").click(function() {
+                        playGame({
+                            'playerId': $("#playerIdd").val(),
+                            'gameId': $("#gameIdd").val(),
+                            'word': $("#word").val(),
+                            'pass': false
+                        });
+                    });
+    $("#pass").click(function() {
+                        pass({
+                            'playerId': $("#player_id").val(),
+                            'gameId': $("#game_id").val(),
+                            'word': null,
+                            'pass': true
+
+
+    }); });
+    $("#start").click(function() {
+                        startGame({
+                            'playerId': $("#playerIddd").val(),
+                            'gameId': $("#gameIddd").val()
+                        });
+                    });
+
 });

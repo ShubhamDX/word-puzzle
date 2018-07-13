@@ -48,6 +48,8 @@
             </table>
         </div>
     </div>
+    <body>
+    <h3>Game Information</h3>
     <div class="row">
         <div class="col-md-6">
             <form class="form-inline">
@@ -68,18 +70,16 @@
             </form>
         </div>
     </div>
-
+    </body>
     <body>
     <h3>Create Game</h3>
     <div class="container">
         <form id="createForm">
-            <!--<label for="playerId">Player Id</label>-->
-            <!--<input type="text" id="playerId" name="playerId" placeholder="Your mobileNumber">-->
+            <label for="playerIdddd">Admin playerId</label>
+            <input type="text" id="playerIdddd" name="playerIdddd" placeholder="Admin's playerId">
             <label for="maxPlayers">MaxPlayers</label>
             <input type="text" id="maxPlayers" name="maxPlayers" placeholder="Enter max Number of players">
-            <!--<label for="subject">Subject</label>-->
-            <!--<textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>-->
-            <input id="create" type="submit" value="Submit">
+            <input id="create" type="submit" value="Create">
         </form>
     </div>
     </body>
@@ -89,11 +89,50 @@
         <form id="joinForm">
             <label for="playerId">Player Id</label>
             <input type="text" id="playerId" name="playerId" placeholder="Your playerId">
-            <label for="gameId">Join Game</label>
+            <label for="gameId">Game Id</label>
             <input type="text" id="gameId" name="gameId" placeholder="Enter game id to join">
             <!--<label for="subject">Subject</label>-->
             <!--<textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>-->
-            <input id="join" type="submit" value="Submit">
+            <input id="join" type="submit" value="JoinGame">
+        </form>
+    </div>
+    </body>
+    <body>
+    <h3>Start Game</h3>
+    <div class="container">
+        <form id="startForm">
+            <label for="playerIddd">Player Id</label>
+            <input type="text" id="playerIddd" name="playerIddd" placeholder="Your playerId">
+            <label for="gameIddd">Game Id</label>
+            <input type="text" id="gameIddd" name="gameIddd" placeholder="Enter game id to start">
+            <input id="start" type="submit" value="StartGame">
+        </form>
+    </div>
+    </body>
+
+    <body>
+    <h3>Play Game</h3>
+    <div class="container">
+        <form id="playForm">
+            <label for="gameIdd">Game Id</label>
+            <input type="text" id="gameIdd" name="gameIdd" placeholder="Game Id">
+            <label for="playerIdd">Player Id</label>
+            <input type="text" id="playerIdd" name="playerIdd" placeholder="Your playerId">
+            <label for="word">Word</label>
+            <input type="text" id="word" name="word" placeholder="Enter word or click pass">
+            <input id="play" type="submit" value="PlayGame">
+        </form>
+    </div>
+    </body>
+    <body>
+    <h3>Pass Chance</h3>
+    <div class="container">
+        <form id="passForm">
+            <label for="game_id">Game Id</label>
+            <input type="text" id="game_id" name="game_id" placeholder="Game Id">
+            <label for="player_id">Player Id</label>
+            <input type="text" id="player_id" name="playerIdd" placeholder="Your playerId">
+            <button id="pass" class="btn btn-default" type="submit">Pass</button>
         </form>
     </div>
     </body>

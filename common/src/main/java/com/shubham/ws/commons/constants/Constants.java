@@ -15,5 +15,12 @@ public interface Constants {
   String SUCCESS_MESSAGE = "SUCCESS";
   String FAILURE_MESSAGE = "FAILURE";
   Integer WINNER_RANK = 1;
+  int ROWS = 15;
+  int COLUMNS = 15;
+  int SEQUENCE = 3;
+  int HORIZONTAL = 0;
+  int VERTICAL = 1;
+  int DIAGONAL = 2;
+  int RANDOM_WORDS_COUNT = 30;
 
 }

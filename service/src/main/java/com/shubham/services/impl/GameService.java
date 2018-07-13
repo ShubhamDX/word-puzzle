@@ -100,15 +100,31 @@ public class GameService {
     return updateGameCache(gameState);
   }
 
+  public String startGame(Player player, Integer gameId) {
+    if (null == gameId || null == player)
+      return String.format("GameId or playerId cannot be null to start a game");
+    GameState gameState = GameCacheImpl.getInstance().getGameIdToGameStateMap().get(gameId);
+    synchronized (gameState) {
+      if (!gameState.getGame().getAdmin().equals(player)) {
+        return String.format("[GameId:%s] : Only admin can start the game", gameId);
+      }
+      if (!GameStatus.TO_BE_STARTED.equals(gameState.getGame().getGameStatus())) {
+        return String.format("[GameId:%s] : Game is already active or finished", gameId);
+      }
+      gameState.getGame().setGameStatus(GameStatus.ACTIVE);
+      updateGameCache(gameState);
+      return String.format("[GameId:%s] : Game has started. Current player turn is %s", gameId, gameState.getCurrentPlayerTurn());
+    }
+  }
+
   public String joinGame(Integer gameId, Player player) {
     if (null == gameId || null == player)
       return String.format("GameId or playerId cannot be null to join a game");
     else if (!getToBeStartedGameIds().contains(gameId))
       return String.format("[GameId:%s] : Cannot join this game", gameId);
     else {
-      synchronized (GameCacheImpl.getInstance().getGameIdToGameStateMap().get(gameId)) {
-        GameCacheImpl gameCache = GameCacheImpl.getInstance();
-        GameState gameState = gameCache.getGameIdToGameStateMap().get(gameId);
+      GameState gameState = GameCacheImpl.getInstance().getGameIdToGameStateMap().get(gameId);
+      synchronized (gameState) {
         if (gameState.getGame().getPlayers().contains(player)) {
           return String.format("[GameId:%s] : PlayerId: %s has already joined", gameId, player);
         }
@@ -131,17 +147,17 @@ public class GameService {
   }
 
   public String playGame(Player player, Integer gameId, String word, Boolean pass) {
-    if (null == player || null == gameId || null == word || null == pass) {
+    if (((null == player || null == gameId || null == word) && !pass)) {
       return String.format("[GameId:%s] : Either of playerId/gameId/word is missing", gameId);
+    }
+    if (((null == player || null == gameId) && pass)) {
+      return String.format("[GameId:%s] : While passing you must enter gameId and your playerId", gameId);
     }
     GameState gameState = GameCacheImpl.getInstance().getGameIdToGameStateMap().get(gameId);
     if (null == gameState) {
       return String.format("[GameId:%s] : The game doesn't exist", gameId);
     }
-    if (word.length() <= 1) {
-      return String.format("[GameId:%s] : Word length <= 1 not supported", gameId);
-    }
-    synchronized (GameCacheImpl.getInstance().getGameIdToGameStateMap().get(gameState.getGame().getGameId())) {
+    synchronized (gameState) {
       if (!GameStatus.ACTIVE.equals(gameState.getGame().getGameStatus())) {
         return String.format("[GameId:%s] : Game  is not in active state", gameId);
       }
@@ -166,6 +182,9 @@ public class GameService {
         updateGameCache(gameState);
         return String.format("[GameId:%s] : Player %s has passed.The player is out of game. Current player turn is %s", gameId,
             player, gameState.getCurrentPlayerTurn());
+      }
+      if (word.length() <= 1) {
+        return String.format("[GameId:%s] : Word length <= 1 not supported", gameId);
       }
       if (gameState.getDiscoveredWords().contains(word)) {
         return String.format(
@@ -236,10 +255,8 @@ public class GameService {
 
   private GameInfoResponse updateGameCache(GameState gameState) {
     try {
-      synchronized (GameCacheImpl.getInstance().getGameIdToGameStateMap().get(gameState.getGame().getGameId())) {
-        GameCacheImpl.getInstance().getGameIdToGameStateMap().put(gameState.getGame().getGameId(), gameState);
-        return new GameInfoResponse(Constants.SUCCESS_MESSAGE, gameState, gameState.getGame().getGameId());
-      }
+      GameCacheImpl.getInstance().getGameIdToGameStateMap().put(gameState.getGame().getGameId(), gameState);
+      return new GameInfoResponse(Constants.SUCCESS_MESSAGE, gameState, gameState.getGame().getGameId());
     } catch (Exception e) {
       log.error(String.format("Error occured in game with gameId : ", gameState.getGame().getGameId()));
       return new GameInfoResponse(Constants.FAILURE_MESSAGE, null, null);
@@ -247,25 +264,27 @@ public class GameService {
 
   }
 
-  // public static void main(String[] args) {
-  // Map<Player, List<String>> map = new HashMap<>();
-  // List<String> l1 = new ArrayList<>();
-  // List<String> l2 = new ArrayList<>();
-  // List<String> l3 = new ArrayList<>();
-  // l1.add("sd");
-  // l1.add("df");
-  // l2.add("aa");
-  // l3.add("sdd");
-  // l3.add("kjadfh");
-  // l3.add("kabdfkjh");
-  // Player p1 = new Player("1");
-  // Player p2 = new Player("2");
-  // Player p3 = new Player("3");
-  // map.put(p1, l1);
-  // map.put(p2, l2);
-  // map.put(p3, l3);
-  // System.out.println(getLeaderBoard(map).toString());
-  //
-  // }
+  public static void main(String[] args) {
+    // Map<Player, List<String>> map = new HashMap<>();
+    // List<String> l1 = new ArrayList<>();
+    // List<String> l2 = new ArrayList<>();
+    // List<String> l3 = new ArrayList<>();
+    // l1.add("sd");
+    // l1.add("df");
+    // l2.add("aa");
+    // l3.add("sdd");
+    // l3.add("kjadfh");
+    // l3.add("kabdfkjh");
+    // Player p1 = new Player("1");
+    // Player p2 = new Player("2");
+    // Player p3 = new Player("3");
+    // map.put(p1, l1);
+    // map.put(p2, l2);
+    // map.put(p3, l3);
+    // System.out.println(getLeaderBoard(map).toString());
+
+    System.out.println(new StringBuilder("abc").reverse().toString());
+
+  }
 
 }

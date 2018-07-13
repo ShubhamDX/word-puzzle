@@ -1,12 +1,17 @@
 package com.shubham.services.impl;
 
 import static com.shubham.ws.commons.constants.Constants.A_ASCII;
+import static com.shubham.ws.commons.constants.Constants.RANDOM_WORDS_COUNT;
+import static com.shubham.ws.commons.constants.Constants.ROWS;
 import static com.shubham.ws.commons.constants.Constants.Z_ASCII;
 
+import com.shubham.ws.commons.util.GridGenerator;
 import com.shubham.ws.models.Grid;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,29 +30,57 @@ public class GridService {
   }
 
   public Grid getGrid() {
-    Grid gridObj = new Grid();
-    Character[][] grid = new Character[5][5];
-    grid[0][4] = 'e';
-    grid[0][3] = 'h';
-    grid[0][2] = 't';
-    grid[4][0] = 's';
-    grid[3][1] = 'p';
-    grid[2][2] = 'i';
-    grid[1][3] = 'n';
-    grid[1][4] = 'y';
-    grid[2][4] = 'b';
-    grid = completeGrid(grid);
-    gridObj.setGrid(grid);
-    gridObj.setContainedWords(Arrays.asList("spine", "the", "bye"));
-    return gridObj;
-
+    Grid grid = new Grid();
+    GridGenerator gridGenerator = new GridGenerator();
+    Set<String> randomWords = dictionaryService.getRandomWords(RANDOM_WORDS_COUNT);
+    List<String> containedWords = new ArrayList<>();
+    int wordsToInsert = 10 + random.nextInt(5);
+    int maxRandomFetch = 3;
+    for (String word : randomWords) {
+      if (wordsToInsert == 0)
+        break;
+      else {
+        if (randomWords.size() == 0 && maxRandomFetch == 0) {
+          break;
+        } else if (randomWords.size() == 0 && maxRandomFetch > 0)
+          randomWords = dictionaryService.getRandomWords(RANDOM_WORDS_COUNT);
+        else {
+          if (word.length() <= ROWS - 2) {
+            boolean isInserted = gridGenerator.insertWordInGrid(word);
+            if (isInserted) {
+              --wordsToInsert;
+              containedWords.add(word);
+            }
+          }
+        }
+      }
+    }
+    // randomWords.stream().filter(word -> word.length()<=ROWS-2).map()
+    // Grid gridObj = new Grid();
+    // Character[][] grid = new Character[5][5];
+    // grid[0][4] = 'e';
+    // grid[0][3] = 'h';
+    // grid[0][2] = 't';
+    // grid[4][0] = 's';
+    // grid[3][1] = 'p';
+    // grid[2][2] = 'i';
+    // grid[1][3] = 'n';
+    // grid[1][4] = 'y';
+    // grid[2][4] = 'b';
+    // grid = completeGrid(grid);
+    // gridObj.setGrid(grid);
+    // gridObj.setContainedWords(Arrays.asList("spine", "the", "bye"));
+    // return gridObj;
+    grid.setGrid(completeGrid(gridGenerator.getGrid()));
+    grid.setContainedWords(containedWords);
+    return grid;
   }
 
   private Character[][] completeGrid(Character[][] grid) {
 
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid[0].length; j++) {
-        if (grid[i][j] == null) {
+        if (grid[i][j] == 0) {
           grid[i][j] = (char) random.ints(1, A_ASCII, Z_ASCII + 1).findFirst().getAsInt();
         }
       }
