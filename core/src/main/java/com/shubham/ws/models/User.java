@@ -33,6 +33,9 @@ public class User {
   @Column(name = "name")
   private String name;
 
+  @Column(name = "score")
+  private Integer score;
+
   @Temporal(TemporalType.TIMESTAMP)
   @CreationTimestamp
   @Column(name = "created_on")

@@ -55,22 +55,6 @@ public class GridService {
         }
       }
     }
-    // randomWords.stream().filter(word -> word.length()<=ROWS-2).map()
-    // Grid gridObj = new Grid();
-    // Character[][] grid = new Character[5][5];
-    // grid[0][4] = 'e';
-    // grid[0][3] = 'h';
-    // grid[0][2] = 't';
-    // grid[4][0] = 's';
-    // grid[3][1] = 'p';
-    // grid[2][2] = 'i';
-    // grid[1][3] = 'n';
-    // grid[1][4] = 'y';
-    // grid[2][4] = 'b';
-    // grid = completeGrid(grid);
-    // gridObj.setGrid(grid);
-    // gridObj.setContainedWords(Arrays.asList("spine", "the", "bye"));
-    // return gridObj;
     grid.setGrid(completeGrid(gridGenerator.getGrid()));
     grid.setContainedWords(containedWords);
     return grid;

@@ -264,27 +264,4 @@ public class GameService {
 
   }
 
-  public static void main(String[] args) {
-    // Map<Player, List<String>> map = new HashMap<>();
-    // List<String> l1 = new ArrayList<>();
-    // List<String> l2 = new ArrayList<>();
-    // List<String> l3 = new ArrayList<>();
-    // l1.add("sd");
-    // l1.add("df");
-    // l2.add("aa");
-    // l3.add("sdd");
-    // l3.add("kjadfh");
-    // l3.add("kabdfkjh");
-    // Player p1 = new Player("1");
-    // Player p2 = new Player("2");
-    // Player p3 = new Player("3");
-    // map.put(p1, l1);
-    // map.put(p2, l2);
-    // map.put(p3, l3);
-    // System.out.println(getLeaderBoard(map).toString());
-
-    System.out.println(new StringBuilder("abc").reverse().toString());
-
-  }
-
 }
